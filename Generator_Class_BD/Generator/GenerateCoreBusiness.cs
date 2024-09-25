@@ -3,6 +3,7 @@
 /*******************************************/
 /** Owner: Jeitson Guerrero Barajas       **/
 
+using Generator_Class_BD.Generator.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,6 +18,7 @@ namespace Generator_Class_BD
         {
             //metodo CrearClase
             StringBuilder cuerpo = new StringBuilder();
+            vNombreClase = TransformFieldHelper.TransformTable(vNombreClase);
 
             cuerpo.Append("using Maguna.Common.Data.Access.IRepositories;\n");
             cuerpo.Append("using Maguna.Common.Infrastructure;\n");
@@ -73,12 +75,12 @@ namespace Generator_Class_BD
         {
             StringBuilder vc = new StringBuilder();
 
-            vc.Append("\tpublic async Task<" + vNombreClase + "Info> Create(" + vNombreClase + "Info item)\n");
+            vc.Append("\tpublic async Task<" + vNombreClase + "> Create(" + vNombreClase + " item)\n");
             vc.Append("\t\t{\n");
-            vc.Append("\t\t\t" + vNombreClase + "Info result = null;\n");
+            vc.Append("\t\t\t" + vNombreClase + " result = null;\n");
             vc.Append("\t\t\ttry\n");
             vc.Append("\t\t\t{\n");
-            vc.Append("\t\t\t\tValidator.Validate<" + vNombreClase + "Info>(item);\n");
+            vc.Append("\t\t\t\tValidator.Validate<" + vNombreClase + ">(item);\n");
             vc.Append("\t\t\t\tresult = _unitOfWork." + vNombreClase + "Repository.Add(item);\n");
             vc.Append("\t\t\t\tawait _unitOfWork.SaveChangesAsync();\n");
             vc.Append("\t\t\t}\n");
@@ -96,9 +98,9 @@ namespace Generator_Class_BD
         {
             StringBuilder vc = new StringBuilder();
 
-            vc.Append("\tpublic async Task<" + vNombreClase + "Info> Update(" + vNombreClase + "Info item)\n");
+            vc.Append("\tpublic async Task<" + vNombreClase + "> Update(" + vNombreClase + " item)\n");
             vc.Append("\t\t{\n");
-            vc.Append("\t\t\t" + vNombreClase + "Info result = null;\n");
+            vc.Append("\t\t\t" + vNombreClase + " result = null;\n");
             vc.Append("\t\t\ttry\n");
             vc.Append("\t\t\t{\n");
             vc.Append("\t\t\t\tresult = await _unitOfWork." + vNombreClase + "Repository.GetAsync(x => x.Id == item.Id);\n");
@@ -131,7 +133,7 @@ namespace Generator_Class_BD
             vc.Append("\t\t\t bool result = false;\n");
             vc.Append("\t\t\ttry\n");
             vc.Append("\t\t\t{\n");
-            vc.Append("\t\t\t\t" + vNombreClase + "Info item = await _unitOfWork." + vNombreClase + "Repository.GetAsync(x => x.Id == id);\n");
+            vc.Append("\t\t\t\t" + vNombreClase + " item = await _unitOfWork." + vNombreClase + "Repository.GetAsync(x => x.Id == id);\n");
             vc.Append("\t\t\t\tif (item != null)\n");
             vc.Append("\t\t\t\t{\n");
             vc.Append("\t\t\t\t\t_unitOfWork." + vNombreClase + "Repository.Remove(item);\n");
@@ -157,9 +159,9 @@ namespace Generator_Class_BD
         {
             StringBuilder vc = new StringBuilder();
 
-            vc.Append("\tpublic async Task<IEnumerable<" + vNombreClase + "Info>> List(Pagination pagination)\n");
+            vc.Append("\tpublic async Task<IEnumerable<" + vNombreClase + ">> List(Pagination pagination)\n");
             vc.Append("\t\t{\n");
-            vc.Append("\t\t\tIEnumerable<" + vNombreClase + "Info> result = new List<" + vNombreClase + "Info>();\n");
+            vc.Append("\t\t\tIEnumerable<" + vNombreClase + "> result = new List<" + vNombreClase + ">();\n");
             vc.Append("\t\t\ttry\n");
             vc.Append("\t\t\t{\n");
             vc.Append("\t\t\t\tresult =  await _unitOfWork." + vNombreClase + "Repository.GetListAsync(pagination);\n");
@@ -172,9 +174,9 @@ namespace Generator_Class_BD
             vc.Append("\t\t}\n");
             vc.Append("\n");
 
-            vc.Append("\t\tpublic async Task<IEnumerable<" + vNombreClase + "Info>> List()\n");
+            vc.Append("\t\tpublic async Task<IEnumerable<" + vNombreClase + ">> List()\n");
             vc.Append("\t\t{\n");
-            vc.Append("\t\t\tIEnumerable<" + vNombreClase + "Info> result = new List<" + vNombreClase + "Info>();\n");
+            vc.Append("\t\t\tIEnumerable<" + vNombreClase + "> result = new List<" + vNombreClase + ">();\n");
             vc.Append("\t\t\ttry\n");
             vc.Append("\t\t\t{\n");
             vc.Append("\t\t\t\tresult =  await _unitOfWork." + vNombreClase + "Repository.GetListAsync();\n");
@@ -193,9 +195,9 @@ namespace Generator_Class_BD
         {
             StringBuilder vc = new StringBuilder();
 
-            vc.Append("\tpublic async Task<" + vNombreClase + "Info> Get(Guid id)\n");
+            vc.Append("\tpublic async Task<" + vNombreClase + "> Get(Guid id)\n");
             vc.Append("\t\t{\n");
-            vc.Append("\t\t\t" + vNombreClase + "Info result = new " + vNombreClase + "Info();\n");
+            vc.Append("\t\t\t" + vNombreClase + " result = new " + vNombreClase + "();\n");
             vc.Append("\t\t\ttry\n");
             vc.Append("\t\t\t{\n");
             vc.Append("\t\t\t\tresult = await _unitOfWork." + vNombreClase + "Repository.GetAsync(x=> x.Id == id);\n");

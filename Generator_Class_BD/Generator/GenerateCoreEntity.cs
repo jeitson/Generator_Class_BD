@@ -3,6 +3,7 @@
 /*******************************************/
 /** Owner: Jeitson Guerrero Barajas       **/
 
+using Generator_Class_BD.Generator.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,6 +18,7 @@ namespace Generator_Class_BD
         {
             //metodo CrearClase
             StringBuilder cuerpo = new StringBuilder();
+            vNombreClase = TransformFieldHelper.TransformTable(vNombreClase);
 
             cuerpo.Append("using Maguna.Common.Infrastructure;\n");
             cuerpo.Append("using Maguna.Common.Entity;\n");
@@ -24,7 +26,7 @@ namespace Generator_Class_BD
             cuerpo.Append("\n");
             cuerpo.Append("namespace " + nameSpace + ".Entity\n");
             cuerpo.Append("{\n");
-            cuerpo.Append("\tpublic class " + vNombreClase + "Info : ModelBase\n");
+            cuerpo.Append("\tpublic class " + vNombreClase + " : ModelBase\n");
             cuerpo.Append("\t{\n");
 
             foreach (DataRow row in dsCol.Tables[0].Rows)//generando los atributos
@@ -45,7 +47,7 @@ namespace Generator_Class_BD
                     if (!string.IsNullOrEmpty(row["CHARACTER_MAXIMUM_LENGTH"].ToString()) && row["CHARACTER_MAXIMUM_LENGTH"].ToString() != "-1")
                         cuerpo.Append("\t\t[MaxLength(MaxLength = " + row["CHARACTER_MAXIMUM_LENGTH"].ToString() + " , Message = \"The field " + row["column_name"].ToString() + " accept " + row["CHARACTER_MAXIMUM_LENGTH"].ToString() + " character(s)\")]\n");
 
-                    cuerpo.Append("\t\tpublic " + Plantilla.ConvertirTipo(row["data_type"].ToString(), row["IS_NULLABLE"].ToString()) + " " + row["column_name"].ToString() + "{ get; set; }\n\n");
+                    cuerpo.Append("\t\tpublic " + Plantilla.ConvertirTipo(row["data_type"].ToString(), row["IS_NULLABLE"].ToString()) + " " + TransformFieldHelper.TransformField(row["column_name"].ToString()) + "{ get; set; }\n\n");
                 }
             }
 
@@ -53,7 +55,7 @@ namespace Generator_Class_BD
             cuerpo.Append("}");
 
             string folder = path + "\\Domain";
-            string fileName = path + "\\Domain\\" + vNombreClase + "Info.cs";
+            string fileName = path + "\\Domain\\" + vNombreClase + ".cs";
             Utility.SaveFile(folder, fileName, cuerpo);
         }
     }
