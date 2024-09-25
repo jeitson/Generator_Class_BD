@@ -45,11 +45,11 @@ namespace Generator_Class_BD
 
             try
             {
-                SqlConnection con = new SqlConnection(lblstrConexion.Text);
+                SqlConnection con = new SqlConnection(lblstrConexion.Text + $"Initial Catalog={lblDataBase.Text};");
                 con.Open();
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "Use " + lblDataBase.Text + " Select table_name From INFORMATION_SCHEMA.Tables where table_type='BASE TABLE'";
+                cmd.CommandText = "Select table_name From INFORMATION_SCHEMA.Tables where table_type='BASE TABLE'";
                 da.SelectCommand = cmd;
                 con.Close();
                 da.Fill(ds);
@@ -74,11 +74,11 @@ namespace Generator_Class_BD
 
             try
             {
-                SqlConnection con = new SqlConnection(lblstrConexion.Text);
+                SqlConnection con = new SqlConnection(lblstrConexion.Text + $"Initial Catalog={lblDataBase.Text};");
                 con.Open();
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "Use " + lblDataBase.Text + " Select COLUMN_NAME,DATA_TYPE,IS_NULLABLE,CHARACTER_MAXIMUM_LENGTH From INFORMATION_SCHEMA.columns where table_name=@TableName";
+                cmd.CommandText = "Select COLUMN_NAME,DATA_TYPE,IS_NULLABLE,CHARACTER_MAXIMUM_LENGTH From INFORMATION_SCHEMA.columns where table_name=@TableName";
                 cmd.Parameters.Add("@TableName", SqlDbType.NVarChar, 50).Value = TableName;
                 da.SelectCommand = cmd;
                 da.Fill(ds);
@@ -99,11 +99,11 @@ namespace Generator_Class_BD
             try
             {
                 SqlCommand cmd = new SqlCommand();
-                SqlConnection con = new SqlConnection(lblstrConexion.Text);
+                SqlConnection con = new SqlConnection(lblstrConexion.Text + $"Initial Catalog={lblDataBase.Text};");
                 con.Open();
                 cmd.Connection = con;
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "Use " + lblDataBase.Text + " Select b.column_name,a.data_type,a.IS_NULLABLE,a.CHARACTER_MAXIMUM_LENGTH From INFORMATION_SCHEMA.columns as a, INFORMATION_SCHEMA.KEY_COLUMN_USAGE as b where a.table_name=@TableName and constraint_name='PK_" + TableName + "' and a.column_name=b.column_name";
+                cmd.CommandText = "Select b.column_name,a.data_type,a.IS_NULLABLE,a.CHARACTER_MAXIMUM_LENGTH From INFORMATION_SCHEMA.columns as a, INFORMATION_SCHEMA.KEY_COLUMN_USAGE as b where a.table_name=@TableName and constraint_name='PK_" + TableName + "' and a.column_name=b.column_name";
                 cmd.Parameters.Add("@TableName", SqlDbType.NVarChar, 50).Value = TableName;
                 SqlDataReader dr = cmd.ExecuteReader();
                 if (dr.Read())

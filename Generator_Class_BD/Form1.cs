@@ -61,7 +61,7 @@ namespace Generator_Class_BD
                 }
                 else
                 {
-                    lblstrConexion.Text = "SERVER=;Initial Catalog=;Persist Security Info=False;User ID=;Password=;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+                    lblstrConexion.Text = $"SERVER={txtServerName.Text};Persist Security Info=False;User ID={txtUser.Text};Password={txtPass.Text};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=true;Connection Timeout=30;";
                 }
                 try
                 {
