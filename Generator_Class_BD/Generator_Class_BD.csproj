@@ -76,6 +76,7 @@
     <Compile Include="Generator\GenerateDataAccess.cs" />
     <Compile Include="Generator\GenerateBusiness.cs" />
     <Compile Include="Generator\GenerateEntity.cs" />
+    <Compile Include="Generator\Helpers\TransformFieldHelper.cs" />
     <Compile Include="Plantilla.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

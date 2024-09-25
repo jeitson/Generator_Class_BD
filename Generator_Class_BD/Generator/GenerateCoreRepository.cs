@@ -3,6 +3,7 @@
 /*******************************************/
 /** Owner: Jeitson Guerrero Barajas       **/
 
+using Generator_Class_BD.Generator.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,6 +18,7 @@ namespace Generator_Class_BD
         {
             //metodo CrearClase
             StringBuilder cuerpo = new StringBuilder();
+            vNombreClase = TransformFieldHelper.TransformTable(vNombreClase);
 
             cuerpo.Append("using Maguna.Common.Data.Access.Repositories;\n");
             cuerpo.Append("using Maguna.Common.Infrastructure;\n");
@@ -26,7 +28,7 @@ namespace Generator_Class_BD
             cuerpo.Append("namespace " + nameSpace + ".Data.Repositories");
             cuerpo.Append("\n");
             cuerpo.Append("{\n");
-            cuerpo.Append("\tpublic class " + vNombreClase + "Repository : Repository<" + vNombreClase + "Info>, I" + vNombreClase + "Repository\n");
+            cuerpo.Append("\tpublic class " + vNombreClase + "Repository : Repository<" + vNombreClase + ">, I" + vNombreClase + "Repository\n");
             cuerpo.Append("\t{\n");
             cuerpo.Append("\t\tprivate CustomerDbContext _db;\n");
             cuerpo.Append("\t\tpublic " + vNombreClase + "Repository(CustomerDbContext dbContext, ISystem system) : base(dbContext, system)\n");

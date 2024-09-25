@@ -41,8 +41,9 @@ namespace Generator_Class_BD
         }
 
         private void Form1_Load(object sender, EventArgs e)
-        {
+        {            
             txtServerName.Focus();
+            defaultData();
         }
 
         private void btnLoad_Click(object sender, EventArgs e)
@@ -61,7 +62,7 @@ namespace Generator_Class_BD
                 }
                 else
                 {
-                    lblstrConexion.Text = "SERVER=;Initial Catalog=;Persist Security Info=False;User ID=;Password=;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+                    lblstrConexion.Text = $"SERVER={txtServerName.Text};Persist Security Info=False;User ID={txtUser.Text};Password={txtPass.Text};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=true;Connection Timeout=30;";
                 }
                 try
                 {
@@ -135,6 +136,13 @@ namespace Generator_Class_BD
         private void btnSalir_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void defaultData()
+        {
+            txtServerName.Text = "postobon-neg-server.database.windows.net";
+            txtUser.Text = "Postobon-Adm";
+            txtPass.Text = "P0st0b0n.*";
         }
     }
 }
