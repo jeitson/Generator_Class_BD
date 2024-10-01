@@ -64,8 +64,9 @@
     <Compile Include="frmView.Designer.cs">
       <DependentUpon>frmView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Generator\GenerateCoreBusiness.cs" />
-    <Compile Include="Generator\GenerateCoreInterface.cs" />
+    <Compile Include="Generator\GenerateCoreServices.cs" />
+    <Compile Include="Generator\GenerateCoreDataAccessConfigureBase.cs" />
+    <Compile Include="Generator\GenerateCoreIRepository.cs" />
     <Compile Include="Generator\GenerateCoreRepository.cs" />
     <Compile Include="Generator\GenerateCoreEntity.cs" />
     <Compile Include="Generator\GenerateCoreDataAccessMapper.cs" />
@@ -76,7 +77,8 @@
     <Compile Include="Generator\GenerateDataAccess.cs" />
     <Compile Include="Generator\GenerateBusiness.cs" />
     <Compile Include="Generator\GenerateEntity.cs" />
-    <Compile Include="Generator\Helpers\TransformFieldHelper.cs" />
+    <Compile Include="Generator\Helpers\StringHelper.cs" />
+    <Compile Include="Generator\Helpers\TransformHelper.cs" />
     <Compile Include="Plantilla.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

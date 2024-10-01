@@ -4,31 +4,26 @@
 /** Owner: Jeitson Guerrero Barajas       **/
 
 using Generator_Class_BD.Generator.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.IO;
 using System.Text;
 
 namespace Generator_Class_BD
 {
-    public static class GenerateCoreBusiness
+    public static class GenerateCoreServices
     {
         public static void Start(string nameSpace, string vNombreClase, string path)
         {
             //metodo CrearClase
             StringBuilder cuerpo = new StringBuilder();
-            vNombreClase = TransformFieldHelper.TransformTable(vNombreClase);
+            vNombreClase = TransformHelper.TransformTable(vNombreClase);
 
-            cuerpo.Append("using Maguna.Common.Data.Access.IRepositories;\n");
-            cuerpo.Append("using Maguna.Common.Infrastructure;\n");
-            cuerpo.Append("using " + nameSpace + ".Data.IRepositories;\n");
-            cuerpo.Append("using " + nameSpace + ".Data.Repositories;\n");
-            cuerpo.Append("using " + nameSpace + ".Entity;\n");
+
+            cuerpo.Append("using " + nameSpace + ".Infraestructure.IRepositories;\n");
+            cuerpo.Append("using " + nameSpace + ".Infraestructure.Repositories;\n");
+            cuerpo.Append("using " + nameSpace + ".Infraestructure.Entities;\n");
             cuerpo.Append("\n");
-            cuerpo.Append("namespace " + nameSpace + ".Business\n");
+            cuerpo.Append("namespace " + nameSpace + ".Domain.Servcies\n");
             cuerpo.Append("{\n");
-            cuerpo.Append("\tpublic class " + vNombreClase + "Module\n");
+            cuerpo.Append("\tpublic class " + vNombreClase + "Service\n");
             cuerpo.Append("\t{\n");
 
             //propiedad DI
@@ -48,8 +43,8 @@ namespace Generator_Class_BD
             cuerpo.Append("}");
             //fin de metodo
 
-            string folder = path + "\\Module";
-            string fileName = path + "\\Module\\" + vNombreClase + ".cs";
+            string folder = $"{path}\\Domain\\Services\\";
+            string fileName = $"{folder}{vNombreClase}Service.cs";
             Utility.SaveFile(folder, fileName, cuerpo);
         }
 
@@ -59,7 +54,7 @@ namespace Generator_Class_BD
 
             vc.Append("\tprivate readonly IUnitOfWork _unitOfWork;\n");
             vc.Append("\t\tprivate readonly ExceptionModule _exceptionModule;\n");
-            
+
 
             vc.Append("\t\tpublic " + vNombreClase + "Module(IUnitOfWork unitOfWork,\n");
             vc.Append("\t\t\t\tExceptionModule exceptionModule)\n");
