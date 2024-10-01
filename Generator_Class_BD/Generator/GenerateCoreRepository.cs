@@ -4,10 +4,6 @@
 /** Owner: Jeitson Guerrero Barajas       **/
 
 using Generator_Class_BD.Generator.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.IO;
 using System.Text;
 
 namespace Generator_Class_BD
@@ -18,14 +14,13 @@ namespace Generator_Class_BD
         {
             //metodo CrearClase
             StringBuilder cuerpo = new StringBuilder();
-            vNombreClase = TransformFieldHelper.TransformTable(vNombreClase);
+            vNombreClase = TransformHelper.TransformTable(vNombreClase);
 
-            cuerpo.Append("using Maguna.Common.Data.Access.Repositories;\n");
-            cuerpo.Append("using Maguna.Common.Infrastructure;\n");
-            cuerpo.Append("using " + nameSpace + ".Data.IRepositories;\n");
-            cuerpo.Append("using " + nameSpace + ".Entity;\n");
+            cuerpo.Append("using " + nameSpace + ".Infraestructure.DataAccess.Entities;\n");
+            cuerpo.Append("using " + nameSpace + ".Infraestructure.IRepositories;\n");
             cuerpo.Append("\n");
-            cuerpo.Append("namespace " + nameSpace + ".Data.Repositories");
+
+            cuerpo.Append("namespace " + nameSpace + ".Infraestructure.Repository");
             cuerpo.Append("\n");
             cuerpo.Append("{\n");
             cuerpo.Append("\tpublic class " + vNombreClase + "Repository : Repository<" + vNombreClase + ">, I" + vNombreClase + "Repository\n");
@@ -41,8 +36,8 @@ namespace Generator_Class_BD
             cuerpo.Append("}");
             //fin de metodo
 
-            string folder = path + "\\Data\\Repositories\\";
-            string fileName = path + "\\Data\\Repositories\\" + vNombreClase + "Repository.cs";
+            string folder = $"{path}\\Infraestructure\\Repositories\\";
+            string fileName = $"{folder}{vNombreClase}Repository.cs";
             Utility.SaveFile(folder, fileName, cuerpo);
         }
     }

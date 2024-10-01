@@ -1,12 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using System.IO;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace Generator_Class_BD
 {
@@ -170,11 +165,12 @@ namespace Generator_Class_BD
 
         private void btnGenerar_Click(object sender, EventArgs e)
         {
+            bool mapperGenerated = false;
             foreach (DataGridViewRow row in dgvTablas.Rows)
             {
                 if (row.Cells[0].Value != null)
                 {
-                    if (Boolean.Parse(row.Cells[0].Value.ToString()) == true)
+                    if (Boolean.Parse(row.Cells[0].Value.ToString()))
                     {
                         string name = row.Cells[1].Value.ToString();
                         if (ckbEntities.Checked)
@@ -197,7 +193,7 @@ namespace Generator_Class_BD
                             GenerateInterface.Start(txtNamespace.Text, name, txtRuta.Text);
 
                         if (coreCheckInterface.Checked)
-                            GenerateCoreInterface.Start(txtNamespace.Text, name, txtRuta.Text);
+                            GenerateCoreIRepository.Start(txtNamespace.Text, name, txtRuta.Text);
 
                         if (coreCheckRepository.Checked)
                             GenerateCoreRepository.Start(txtNamespace.Text, name, txtRuta.Text);
@@ -206,14 +202,20 @@ namespace Generator_Class_BD
                             GenerateCoreEntity.Start(txtNamespace.Text, name, txtRuta.Text, GetColumns(name));
 
                         if (chkDataCore.Checked)
+                        {
                             GenerateCoreDataAccessMapper.Start(txtNamespace.Text, name, txtRuta.Text, GetColumns(name));
+                            mapperGenerated = true;
+                        }
 
                         if (chkDataModule.Checked)
-                            GenerateCoreBusiness.Start(txtNamespace.Text, name, txtRuta.Text);
+                            GenerateCoreServices.Start(txtNamespace.Text, name, txtRuta.Text);
 
                     }
                 }
             }
+
+            if (mapperGenerated)
+                GenerateCoreDataAccessConfigureBase.Start(txtNamespace.Text, txtRuta.Text);
 
             MessageBox.Show("Termino el Proceso");
         }

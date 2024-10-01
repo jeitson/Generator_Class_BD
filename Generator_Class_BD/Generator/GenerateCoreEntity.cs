@@ -4,10 +4,7 @@
 /** Owner: Jeitson Guerrero Barajas       **/
 
 using Generator_Class_BD.Generator.Helpers;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Text;
 
 namespace Generator_Class_BD
@@ -18,44 +15,37 @@ namespace Generator_Class_BD
         {
             //metodo CrearClase
             StringBuilder cuerpo = new StringBuilder();
-            vNombreClase = TransformFieldHelper.TransformTable(vNombreClase);
+            vNombreClase = TransformHelper.TransformTable(vNombreClase);
 
-            cuerpo.Append("using Maguna.Common.Infrastructure;\n");
-            cuerpo.Append("using Maguna.Common.Entity;\n");
+
             cuerpo.Append("using System;\n");
+            cuerpo.Append("using " + nameSpace + ".Infraestructure.DataAccess.Entities.Base\n");
             cuerpo.Append("\n");
-            cuerpo.Append("namespace " + nameSpace + ".Entity\n");
+            cuerpo.Append("namespace " + nameSpace + ".Infraestructure.DataAccess.Entities\n");
             cuerpo.Append("{\n");
-            cuerpo.Append("\tpublic class " + vNombreClase + " : ModelBase\n");
+            cuerpo.Append("\tpublic class " + vNombreClase + " : BaseEntity\n");
             cuerpo.Append("\t{\n");
 
             foreach (DataRow row in dsCol.Tables[0].Rows)//generando los atributos
             {
-                if (row["column_name"].ToString().ToLower() != "id" &&
-                   row["column_name"].ToString().ToLower() != "tenantid" &&
-                   row["column_name"].ToString().ToLower() != "name" &&
-                   row["column_name"].ToString().ToLower() != "description" &&
-                   row["column_name"].ToString().ToLower() != "status" &&
-                   row["column_name"].ToString().ToLower() != "createdon" &&
-                   row["column_name"].ToString().ToLower() != "createdby" &&
-                   row["column_name"].ToString().ToLower() != "modifiedon" &&
-                   row["column_name"].ToString().ToLower() != "modifiedby")
+                string columnName = TransformHelper.TransformField(row["column_name"].ToString());
+                if (TransformHelper.FieldIsNotBase(columnName))
                 {
-                    if (row["IS_NULLABLE"].ToString() == "NO" && row["column_name"].ToString().ToLower() != "id")
+                    if (row["IS_NULLABLE"].ToString() == "NO")
                         cuerpo.Append("\t\t[Required]\n");
 
                     if (!string.IsNullOrEmpty(row["CHARACTER_MAXIMUM_LENGTH"].ToString()) && row["CHARACTER_MAXIMUM_LENGTH"].ToString() != "-1")
-                        cuerpo.Append("\t\t[MaxLength(MaxLength = " + row["CHARACTER_MAXIMUM_LENGTH"].ToString() + " , Message = \"The field " + row["column_name"].ToString() + " accept " + row["CHARACTER_MAXIMUM_LENGTH"].ToString() + " character(s)\")]\n");
+                        cuerpo.Append("\t\t[MaxLength(MaxLength = " + row["CHARACTER_MAXIMUM_LENGTH"].ToString() + " , Message = \"The field " + columnName + " accept " + row["CHARACTER_MAXIMUM_LENGTH"].ToString() + " character(s)\")]\n");
 
-                    cuerpo.Append("\t\tpublic " + Plantilla.ConvertirTipo(row["data_type"].ToString(), row["IS_NULLABLE"].ToString()) + " " + TransformFieldHelper.TransformField(row["column_name"].ToString()) + "{ get; set; }\n\n");
+                    cuerpo.Append("\t\tpublic " + Plantilla.ConvertirTipo(row["data_type"].ToString(), row["IS_NULLABLE"].ToString()) + " " + columnName + "{ get; set; }\n\n");
                 }
             }
 
             cuerpo.Append("\t}\n");
             cuerpo.Append("}");
 
-            string folder = path + "\\Domain";
-            string fileName = path + "\\Domain\\" + vNombreClase + ".cs";
+            string folder = $"{path}\\Infraestructure\\DataAccess\\Entities\\";
+            string fileName = $"{folder}{vNombreClase}.cs";
             Utility.SaveFile(folder, fileName, cuerpo);
         }
     }
