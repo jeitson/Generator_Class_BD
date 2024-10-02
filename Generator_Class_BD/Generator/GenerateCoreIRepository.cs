@@ -16,7 +16,7 @@ namespace Generator_Class_BD
             vNombreClase = TransformHelper.TransformTable(vNombreClase);
 
 
-            cuerpo.Append("using " + nameSpace + ".Infraestructure.DataAccess.Entities;\n");
+            cuerpo.Append("using " + nameSpace + ".Infraestructure.Entities;\n");
             cuerpo.Append("\n");
             cuerpo.Append("namespace " + nameSpace + ".Infraestructure.IRepositories\n");
             cuerpo.Append("{\n");

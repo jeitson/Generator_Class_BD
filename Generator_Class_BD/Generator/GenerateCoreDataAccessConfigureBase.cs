@@ -17,9 +17,9 @@ namespace Generator_Class_BD
 
             cuerpo.Append("using Microsoft.EntityFrameworkCore;\n");
             cuerpo.Append("using Microsoft.EntityFrameworkCore.Metadata.Builders;\n");
-            cuerpo.Append("using " + nameSpace + ".Infraestructure.DataAccess.Entities.Base;\n");
+            cuerpo.Append("using " + nameSpace + ".Infraestructure.Entities.Base;\n");
 
-            cuerpo.Append("namespace " + nameSpace + "Infraestructure.DataAccess.Config.Base");
+            cuerpo.Append("namespace " + nameSpace + "Infraestructure.DataAccess.Configurations.Base");
             cuerpo.Append("\n");
             cuerpo.Append("{\n");
             cuerpo.Append("\tinternal class BaseEntityConfig<T> : IEntityTypeConfiguration<T> where T : BaseEntity\n");
@@ -58,7 +58,7 @@ namespace Generator_Class_BD
             cuerpo.Append("}");
             //fin de metodo
 
-            string folder = $"{path}\\Infraestructure\\DataAccess\\Config\\Base\\";
+            string folder = $"{path}\\Infraestructure\\DataAccess\\Configurations\\Base\\";
             string fileName = $"{folder}BaseEntityConfig.cs";
             Utility.SaveFile(folder, fileName, cuerpo);
         }

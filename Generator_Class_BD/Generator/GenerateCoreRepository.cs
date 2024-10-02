@@ -16,8 +16,10 @@ namespace Generator_Class_BD
             StringBuilder cuerpo = new StringBuilder();
             vNombreClase = TransformHelper.TransformTable(vNombreClase);
 
-            cuerpo.Append("using " + nameSpace + ".Infraestructure.DataAccess.Entities;\n");
+            cuerpo.Append("using " + nameSpace + ".Infraestructure.DataAccess;\n");
+            cuerpo.Append("using " + nameSpace + ".Infraestructure.Entities;\n");
             cuerpo.Append("using " + nameSpace + ".Infraestructure.IRepositories;\n");
+            cuerpo.Append("using " + nameSpace + ".Utility;\n");
             cuerpo.Append("\n");
 
             cuerpo.Append("namespace " + nameSpace + ".Infraestructure.Repository");
@@ -25,8 +27,8 @@ namespace Generator_Class_BD
             cuerpo.Append("{\n");
             cuerpo.Append("\tpublic class " + vNombreClase + "Repository : Repository<" + vNombreClase + ">, I" + vNombreClase + "Repository\n");
             cuerpo.Append("\t{\n");
-            cuerpo.Append("\t\tprivate CustomerDbContext _db;\n");
-            cuerpo.Append("\t\tpublic " + vNombreClase + "Repository(CustomerDbContext dbContext, ISystem system) : base(dbContext, system)\n");
+            cuerpo.Append("\t\tprivate ApplicationDbContext _db;\n");
+            cuerpo.Append("\t\tpublic " + vNombreClase + "Repository(ApplicationDbContext dbContext, ISystem system) : base(dbContext, system)\n");
             cuerpo.Append("\t\t{\n");
             cuerpo.Append("\t\t\t _db = dbContext;\n");
             cuerpo.Append("\t\t\t _system = system;\n");
