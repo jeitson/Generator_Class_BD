@@ -19,9 +19,10 @@ namespace Generator_Class_BD
 
 
             cuerpo.Append("using System;\n");
-            cuerpo.Append("using " + nameSpace + ".Infraestructure.DataAccess.Entities.Base\n");
+            cuerpo.Append("using " + nameSpace + ".Infraestructure.Entities.Base;\n");
+            cuerpo.Append("using " + nameSpace + ".Utility;\n");
             cuerpo.Append("\n");
-            cuerpo.Append("namespace " + nameSpace + ".Infraestructure.DataAccess.Entities\n");
+            cuerpo.Append("namespace " + nameSpace + ".Infraestructure.Entities\n");
             cuerpo.Append("{\n");
             cuerpo.Append("\tpublic class " + vNombreClase + " : BaseEntity\n");
             cuerpo.Append("\t{\n");
@@ -44,7 +45,7 @@ namespace Generator_Class_BD
             cuerpo.Append("\t}\n");
             cuerpo.Append("}");
 
-            string folder = $"{path}\\Infraestructure\\DataAccess\\Entities\\";
+            string folder = $"{path}\\Infraestructure\\Entities\\";
             string fileName = $"{folder}{vNombreClase}.cs";
             Utility.SaveFile(folder, fileName, cuerpo);
         }

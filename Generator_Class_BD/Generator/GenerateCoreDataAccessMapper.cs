@@ -20,10 +20,10 @@ namespace Generator_Class_BD
 
             cuerpo.Append("using Microsoft.EntityFrameworkCore;\n");
             cuerpo.Append("using Microsoft.EntityFrameworkCore.Metadata.Builders;\n");
-            cuerpo.Append("using " + nameSpace + ".Infraestructure.DataAccess.Entities;\n");
-            cuerpo.Append("using " + nameSpace + ".Infraestructure.DataAccess.Config.Base;\n");
+            cuerpo.Append("using " + nameSpace + ".Infraestructure.Entities;\n");
+            cuerpo.Append("using " + nameSpace + ".Infraestructure.DataAccess.Configurations.Base;\n");
 
-            cuerpo.Append("namespace " + nameSpace + ".Infraestructure.DataAccess.Config");
+            cuerpo.Append("namespace " + nameSpace + ".Infraestructure.DataAccess.Configurations");
             cuerpo.Append("\n");
             cuerpo.Append("{\n");
             cuerpo.Append("\tinternal class " + vNombreClase + "Config : BaseEntityConfig<" + vNombreClase + ">\n");
@@ -37,17 +37,21 @@ namespace Generator_Class_BD
             foreach (DataRow row in dsCol.Tables[0].Rows)//generando los atributos
             {
                 string columName = TransformHelper.TransformField(row["column_name"].ToString());
-                //crea la propiedad
-                cuerpo.Append("\t\t\tbuilder.Property(x => x." + columName + ")");
+                if (TransformHelper.FieldIsNotBase(columName))
+                {
+                    //crea la propiedad
+                    cuerpo.Append("\t\t\tbuilder.Property(x => x." + columName + ")\n");
 
-                //agrega el maximo si tiene
-                if (!string.IsNullOrEmpty(row["CHARACTER_MAXIMUM_LENGTH"].ToString()) && row["CHARACTER_MAXIMUM_LENGTH"].ToString() != "-1")
-                    cuerpo.Append("\t\t\t\t.HasMaxLength(" + row["CHARACTER_MAXIMUM_LENGTH"].ToString() + ")\n");
+                    //agrega el maximo si tiene
+                    if (!string.IsNullOrEmpty(row["CHARACTER_MAXIMUM_LENGTH"].ToString()) && row["CHARACTER_MAXIMUM_LENGTH"].ToString() != "-1")
+                        cuerpo.Append("\t\t\t\t.HasMaxLength(" + row["CHARACTER_MAXIMUM_LENGTH"].ToString() + ")\n");
 
-                if (row["IS_NULLABLE"].ToString() == "NO" && columName.ToLower() != "id")
-                    cuerpo.Append("\t\t\t\t.IsRequired()\n");
+                    if (row["IS_NULLABLE"].ToString() == "NO" && columName.ToLower() != "id")
+                        cuerpo.Append("\t\t\t\t.IsRequired()\n");
 
-                cuerpo.Append("\t\t\t\t.HasColumnName(\"" + row["column_name"].ToString() + "\");\n\n");
+                    cuerpo.Append("\t\t\t\t.HasColumnName(\"" + row["column_name"].ToString() + "\");\n\n");
+                }
+
             }
 
             cuerpo.Append("\t\t\tbase.Configure(builder);\n");
@@ -60,7 +64,7 @@ namespace Generator_Class_BD
             cuerpo.Append("}");
             //fin de metodo
 
-            string folder = $"{path}\\Infraestructure\\DataAccess\\Config\\";
+            string folder = $"{path}\\Infraestructure\\DataAccess\\Configurations\\";
             string fileName = $"{folder}{vNombreClase}Config.cs";
             Utility.SaveFile(folder, fileName, cuerpo);
         }

@@ -17,11 +17,12 @@ namespace Generator_Class_BD
             vNombreClase = TransformHelper.TransformTable(vNombreClase);
 
 
-            cuerpo.Append("using " + nameSpace + ".Infraestructure.IRepositories;\n");
-            cuerpo.Append("using " + nameSpace + ".Infraestructure.Repositories;\n");
+            cuerpo.Append("using " + nameSpace + "..Domain.Dtos;;\n");
             cuerpo.Append("using " + nameSpace + ".Infraestructure.Entities;\n");
+            cuerpo.Append("using " + nameSpace + ".Infraestructure.DataAccess;\n");
+            cuerpo.Append("using " + nameSpace + ".Utility;\n");
             cuerpo.Append("\n");
-            cuerpo.Append("namespace " + nameSpace + ".Domain.Servcies\n");
+            cuerpo.Append("namespace " + nameSpace + ".Domain.Services\n");
             cuerpo.Append("{\n");
             cuerpo.Append("\tpublic class " + vNombreClase + "Service\n");
             cuerpo.Append("\t{\n");
@@ -56,7 +57,7 @@ namespace Generator_Class_BD
             vc.Append("\t\tprivate readonly ExceptionModule _exceptionModule;\n");
 
 
-            vc.Append("\t\tpublic " + vNombreClase + "Module(IUnitOfWork unitOfWork,\n");
+            vc.Append("\t\tpublic " + vNombreClase + "Service(IUnitOfWork unitOfWork,\n");
             vc.Append("\t\t\t\tExceptionModule exceptionModule)\n");
             vc.Append("\t\t{\n");
             vc.Append("\t\t\t_unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));\n");
