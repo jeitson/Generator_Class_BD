@@ -110,10 +110,14 @@ public static class Plantilla
             case "decimal":
                 convertido = (isNull == "YES") ? "decimal?" : "decimal";
                 break;
+            case "numeric":
+                convertido = (isNull == "YES") ? "decimal?" : "decimal";
+                break;
 
             case "varbinary":
                 convertido = (isNull == "YES") ? "byte[]?" : "byte[]";
                 break;
+            
         }
         return convertido;
     }

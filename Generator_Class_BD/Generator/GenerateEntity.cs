@@ -31,7 +31,7 @@ namespace Generator_Class_BD
                 if (!string.IsNullOrEmpty(row["CHARACTER_MAXIMUM_LENGTH"].ToString()) && row["CHARACTER_MAXIMUM_LENGTH"].ToString() != "-1")
                     cuerpo.Append("\t\t[MaxLength(MaxLength = "+ row["CHARACTER_MAXIMUM_LENGTH"].ToString() + " , Message = \"The field "+ row["column_name"].ToString() +" accept "+ row["CHARACTER_MAXIMUM_LENGTH"].ToString() + " character(s)\")]\n");
 
-                cuerpo.Append("\t\tpublic " + Plantilla.ConvertirTipo(row["data_type"].ToString(), row["IS_NULLABLE"].ToString()) + " " + row["column_name"].ToString() + "{ get; set; }\n\n");
+                cuerpo.Append("\t\tpublic " + Plantilla.ConvertirTipo(row["data_type"].ToString(), row["IS_NULLABLE"].ToString()) + " " + row["column_name"].ToString() + " { get; set; }\n\n");
             }
            
             cuerpo.Append("\t}\n");
