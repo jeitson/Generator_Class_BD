@@ -10,7 +10,7 @@ namespace Generator_Class_BD
 {
     public static class GenerateCoreServices
     {
-        public static void Start(string nameSpace, string vNombreClase, string path)
+        public static void Start(string nameSpace, string vNombreClase, string path, string idPk, string typePk)
         {
             //metodo CrearClase
             StringBuilder cuerpo = new StringBuilder();
@@ -18,13 +18,14 @@ namespace Generator_Class_BD
 
 
             cuerpo.Append("using " + nameSpace + ".Domain.Dtos;\n");
+            cuerpo.Append("using " + nameSpace + ".Domain.Interfaces;\n");
             cuerpo.Append("using " + nameSpace + ".Infraestructure.Entities;\n");
             cuerpo.Append("using " + nameSpace + ".Infraestructure.DataAccess;\n");
             cuerpo.Append("using " + nameSpace + ".Utility;\n");
             cuerpo.Append("\n");
             cuerpo.Append("namespace " + nameSpace + ".Domain.Services\n");
             cuerpo.Append("{\n");
-            cuerpo.Append("\tpublic class " + vNombreClase + "Service\n");
+            cuerpo.Append($"\tpublic class {vNombreClase}Service : I{vNombreClase}Service \n");
             cuerpo.Append("\t{\n");
 
             //propiedad DI
@@ -32,11 +33,11 @@ namespace Generator_Class_BD
 
             cuerpo.Append("\t" + MetodoCrear(vNombreClase) + "\n\n");
 
-            cuerpo.Append("\t" + MetodoModificar(vNombreClase) + "\n\n");
+            cuerpo.Append("\t" + MetodoModificar(vNombreClase, idPk) + "\n\n");
 
-            cuerpo.Append("\t" + MetodoEliminar(vNombreClase) + "\n\n");
+            cuerpo.Append("\t" + MetodoEliminar(vNombreClase, idPk, typePk) + "\n\n");
 
-            cuerpo.Append("\t" + MetodoBuscarId(vNombreClase) + "\n\n");
+            cuerpo.Append("\t" + MetodoBuscarId(vNombreClase, idPk, typePk) + "\n\n");
 
             cuerpo.Append("\t" + MetodoBuscarTodos(vNombreClase) + "\n\n");
 
@@ -90,7 +91,7 @@ namespace Generator_Class_BD
             return vc.ToString();
         }
 
-        private static string MetodoModificar(string vNombreClase)
+        private static string MetodoModificar(string vNombreClase, string idPk)
         {
             StringBuilder vc = new StringBuilder();
 
@@ -99,9 +100,10 @@ namespace Generator_Class_BD
             vc.Append("\t\t\t" + vNombreClase + " result = null;\n");
             vc.Append("\t\t\ttry\n");
             vc.Append("\t\t\t{\n");
-            vc.Append("\t\t\t\tresult = await _unitOfWork." + vNombreClase + "Repository.GetAsync(x => x.Id == item.Id);\n");
+            vc.Append($"\t\t\t\tresult = await _unitOfWork.{vNombreClase}Repository.GetAsync(x => x.{idPk} == item.{idPk});\n");
             vc.Append("\t\t\t\tif (result != null)\n");
             vc.Append("\t\t\t\t{\n");
+            vc.Append("\t\t\t\t/// Aqui deben de agregar la logica de los campos que cambiaron o en su defecto el automapper");
             vc.Append("\t\t\t\t\tawait _unitOfWork." + vNombreClase + "Repository.UpdateAsync(result);\n");
             vc.Append("\t\t\t\t\tawait _unitOfWork.SaveChangesAsync();\n");
             vc.Append("\t\t\t\t}\n");
@@ -120,16 +122,16 @@ namespace Generator_Class_BD
             return vc.ToString();
         }
 
-        private static string MetodoEliminar(string vNombreClase)
+        private static string MetodoEliminar(string vNombreClase, string idPk, string typePk)
         {
             StringBuilder vc = new StringBuilder();
 
-            vc.Append("\tpublic async Task<bool> Delete(Guid id)\n");
+            vc.Append($"\tpublic async Task<bool> Delete({typePk} {idPk})\n");
             vc.Append("\t\t{\n");
             vc.Append("\t\t\t bool result = false;\n");
             vc.Append("\t\t\ttry\n");
             vc.Append("\t\t\t{\n");
-            vc.Append("\t\t\t\t" + vNombreClase + " item = await _unitOfWork." + vNombreClase + "Repository.GetAsync(x => x.Id == id);\n");
+            vc.Append($"\t\t\t\t{vNombreClase} item = await _unitOfWork.{vNombreClase}Repository.GetAsync(x => x.{idPk} == {idPk});\n");
             vc.Append("\t\t\t\tif (item != null)\n");
             vc.Append("\t\t\t\t{\n");
             vc.Append("\t\t\t\t\t_unitOfWork." + vNombreClase + "Repository.Remove(item);\n");
@@ -187,16 +189,16 @@ namespace Generator_Class_BD
             return vc.ToString();
         }
 
-        private static string MetodoBuscarId(string vNombreClase)
+        private static string MetodoBuscarId(string vNombreClase, string idPk, string typePk)
         {
             StringBuilder vc = new StringBuilder();
 
-            vc.Append("\tpublic async Task<" + vNombreClase + "> Get(Guid id)\n");
+            vc.Append($"\tpublic async Task<{vNombreClase}> Get({typePk} {idPk})\n");
             vc.Append("\t\t{\n");
             vc.Append("\t\t\t" + vNombreClase + " result = new " + vNombreClase + "();\n");
             vc.Append("\t\t\ttry\n");
             vc.Append("\t\t\t{\n");
-            vc.Append("\t\t\t\tresult = await _unitOfWork." + vNombreClase + "Repository.GetAsync(x=> x.Id == id);\n");
+            vc.Append($"\t\t\t\tresult = await _unitOfWork.{vNombreClase}Repository.GetAsync(x=> x.{idPk} == {idPk});\n");
             vc.Append("\t\t\t}\n");
             vc.Append("\t\t\tcatch (Exception ex)\n");
             vc.Append("\t\t\t{\n");

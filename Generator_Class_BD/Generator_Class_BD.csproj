@@ -64,6 +64,7 @@
     <Compile Include="frmView.Designer.cs">
       <DependentUpon>frmView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Generator\GenerateCoreInterfaceServices.cs" />
     <Compile Include="Generator\GenerateCoreServices.cs" />
     <Compile Include="Generator\GenerateCoreDataAccessConfigureBase.cs" />
     <Compile Include="Generator\GenerateCoreIRepository.cs" />

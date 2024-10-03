@@ -32,11 +32,18 @@ namespace Generator_Class_BD
             cuerpo.Append("\t\tpublic override void Configure(EntityTypeBuilder<" + vNombreClase + "> builder)\n");
             cuerpo.Append("\t\t{\n");
             cuerpo.Append("\t\t\tbuilder.ToTable(\"TBL_" + vNombreClase + "\");\n");
-            cuerpo.Append("\t\t\tbuilder.HasKey(x => x.Id);\n\n");
+
 
             foreach (DataRow row in dsCol.Tables[0].Rows)//generando los atributos
             {
                 string columName = TransformHelper.TransformField(row["column_name"].ToString());
+
+                if (StringHelper.CompareString(columName, "Code") || StringHelper.CompareString(columName, "Id"))
+                {
+                    string columnId = StringHelper.CompareString(columName, "Code") ? "Code" : "Id";
+                    cuerpo.Append($"\t\t\tbuilder.HasKey(x => x.{columnId});\n\n");
+                }
+
                 if (TransformHelper.FieldIsNotBase(columName))
                 {
                     //crea la propiedad

@@ -30,15 +30,33 @@ namespace Generator_Class_BD
             foreach (DataRow row in dsCol.Tables[0].Rows)//generando los atributos
             {
                 string columnName = TransformHelper.TransformField(row["column_name"].ToString());
+
+
+
                 if (TransformHelper.FieldIsNotBase(columnName))
                 {
-                    if (row["IS_NULLABLE"].ToString() == "NO")
+                    if (StringHelper.CompareString(columnName, "Id"))
+                    {
                         cuerpo.Append("\t\t[Required]\n");
+                        string tipo = "Guid";
+                        string tipoPlantilla = Plantilla.ConvertirTipo(row["data_type"].ToString(), row["IS_NULLABLE"].ToString());
+                        if (!StringHelper.CompareString(tipoPlantilla, "string"))
+                            tipo = tipoPlantilla;
+                        //else if (!string.IsNullOrEmpty(row["CHARACTER_MAXIMUM_LENGTH"].ToString()) && row["CHARACTER_MAXIMUM_LENGTH"].ToString() != "-1" && Int32.Parse(row["CHARACTER_MAXIMUM_LENGTH"].ToString()) != 10 )
+                        //    cuerpo.Append("\t\t[MaxLength(MaxLength = " + row["CHARACTER_MAXIMUM_LENGTH"].ToString() + " , Message = \"The field " + columnName + " accept " + row["CHARACTER_MAXIMUM_LENGTH"].ToString() + " character(s)\")]\n");
 
-                    if (!string.IsNullOrEmpty(row["CHARACTER_MAXIMUM_LENGTH"].ToString()) && row["CHARACTER_MAXIMUM_LENGTH"].ToString() != "-1")
-                        cuerpo.Append("\t\t[MaxLength(MaxLength = " + row["CHARACTER_MAXIMUM_LENGTH"].ToString() + " , Message = \"The field " + columnName + " accept " + row["CHARACTER_MAXIMUM_LENGTH"].ToString() + " character(s)\")]\n");
+                        cuerpo.Append("\t\tpublic " + tipo + " " + columnName + " { get; set; }\n\n");
+                    }
+                    else
+                    {
+                        if (row["IS_NULLABLE"].ToString() == "NO")
+                            cuerpo.Append("\t\t[Required]\n");
 
-                    cuerpo.Append("\t\tpublic " + Plantilla.ConvertirTipo(row["data_type"].ToString(), row["IS_NULLABLE"].ToString()) + " " + columnName + " { get; set; }\n\n");
+                        if (!string.IsNullOrEmpty(row["CHARACTER_MAXIMUM_LENGTH"].ToString()) && row["CHARACTER_MAXIMUM_LENGTH"].ToString() != "-1")
+                            cuerpo.Append("\t\t[MaxLength(MaxLength = " + row["CHARACTER_MAXIMUM_LENGTH"].ToString() + " , Message = \"The field " + columnName + " accept " + row["CHARACTER_MAXIMUM_LENGTH"].ToString() + " character(s)\")]\n");
+
+                        cuerpo.Append("\t\tpublic " + Plantilla.ConvertirTipo(row["data_type"].ToString(), row["IS_NULLABLE"].ToString()) + " " + columnName + " { get; set; }\n\n");
+                    }
                 }
             }
 

@@ -1,3 +1,4 @@
+using Generator_Class_BD.Generator.Helpers;
 using System;
 using System.Data;
 using System.Data.SqlClient;
@@ -208,7 +209,19 @@ namespace Generator_Class_BD
                         }
 
                         if (chkDataModule.Checked)
-                            GenerateCoreServices.Start(txtNamespace.Text, name, txtRuta.Text);
+                        {
+                            GetPKey(name);
+                            string columnName = TransformHelper.TransformField(vidPk);
+                            string tipo = "string";
+                            if (!StringHelper.CompareString(columnName, "Id"))
+                                tipo = "Guid";
+                            string tipoPlantilla = Plantilla.ConvertirTipo(vTypePk, string.Empty);
+                            if (!StringHelper.CompareString(tipoPlantilla, "string"))
+                                tipo = tipoPlantilla;
+
+                            GenerateCoreServices.Start(txtNamespace.Text, name, txtRuta.Text, columnName, tipo);
+                            GenerateCoreInterfaceServices.Start(txtNamespace.Text, name, txtRuta.Text, columnName, tipo);
+                        }
 
                     }
                 }

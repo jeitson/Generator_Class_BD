@@ -23,7 +23,7 @@
         }
 
         public static bool FieldIsNotBase(string nameField)
-            => !StringHelper.CompareString(nameField, "Id") &&
+            => //!StringHelper.CompareString(nameField, "Id") &&
                 !StringHelper.CompareString(nameField, "CreationDate") &&
                 !StringHelper.CompareString(nameField, "CreationUser") &&
                 !StringHelper.CompareString(nameField, "ModificationDate") &&
