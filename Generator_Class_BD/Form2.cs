@@ -212,9 +212,10 @@ namespace Generator_Class_BD
                         {
                             GetPKey(name);
                             string columnName = TransformHelper.TransformField(vidPk);
-                            string tipo = "string";
+                            string tipo = "Guid";
                             if (!StringHelper.CompareString(columnName, "Id"))
-                                tipo = "Guid";
+                                tipo = "string";
+
                             string tipoPlantilla = Plantilla.ConvertirTipo(vTypePk, string.Empty);
                             if (!StringHelper.CompareString(tipoPlantilla, "string"))
                                 tipo = tipoPlantilla;
