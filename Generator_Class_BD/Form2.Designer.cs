@@ -59,6 +59,7 @@
             this.coreCheckEntities = new System.Windows.Forms.CheckBox();
             this.chkDataCore = new System.Windows.Forms.CheckBox();
             this.chkDataModule = new System.Windows.Forms.CheckBox();
+            this.chkDataController = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTablas)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -366,11 +367,22 @@
             this.chkDataModule.Text = "Core Module";
             this.chkDataModule.UseVisualStyleBackColor = true;
             // 
+            // chkDataController
+            // 
+            this.chkDataController.AutoSize = true;
+            this.chkDataController.Location = new System.Drawing.Point(465, 461);
+            this.chkDataController.Name = "chkDataController";
+            this.chkDataController.Size = new System.Drawing.Size(95, 17);
+            this.chkDataController.TabIndex = 37;
+            this.chkDataController.Text = "Core Controller";
+            this.chkDataController.UseVisualStyleBackColor = true;
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(875, 522);
+            this.Controls.Add(this.chkDataController);
             this.Controls.Add(this.chkDataModule);
             this.Controls.Add(this.chkDataCore);
             this.Controls.Add(this.coreCheckEntities);
@@ -446,5 +458,6 @@
         private System.Windows.Forms.CheckBox coreCheckEntities;
         private System.Windows.Forms.CheckBox chkDataCore;
         private System.Windows.Forms.CheckBox chkDataModule;
+        private System.Windows.Forms.CheckBox chkDataController;
     }
 }

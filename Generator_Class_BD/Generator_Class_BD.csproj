@@ -64,6 +64,7 @@
     <Compile Include="frmView.Designer.cs">
       <DependentUpon>frmView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Generator\GenerateCoreController.cs" />
     <Compile Include="Generator\GenerateCoreInterfaceServices.cs" />
     <Compile Include="Generator\GenerateCoreServices.cs" />
     <Compile Include="Generator\GenerateCoreDataAccessConfigureBase.cs" />
@@ -78,7 +79,7 @@
     <Compile Include="Generator\GenerateDataAccess.cs" />
     <Compile Include="Generator\GenerateBusiness.cs" />
     <Compile Include="Generator\GenerateEntity.cs" />
-    <Compile Include="Generator\Helpers\StringHelper.cs" />
+    <Compile Include="Generator\Helpers\StringExt.cs" />
     <Compile Include="Generator\Helpers\TransformHelper.cs" />
     <Compile Include="Plantilla.cs" />
     <Compile Include="Program.cs" />

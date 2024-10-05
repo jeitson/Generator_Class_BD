@@ -18,10 +18,11 @@ namespace Generator_Class_BD
             vNombreClase = TransformHelper.TransformTable(vNombreClase);
 
 
+            cuerpo.Append("using " + nameSpace + ".Infraestructure.DataAccess.Configurations.Base;\n");
+            cuerpo.Append("using " + nameSpace + ".Infraestructure.Entities;\n");
             cuerpo.Append("using Microsoft.EntityFrameworkCore;\n");
             cuerpo.Append("using Microsoft.EntityFrameworkCore.Metadata.Builders;\n");
-            cuerpo.Append("using " + nameSpace + ".Infraestructure.Entities;\n");
-            cuerpo.Append("using " + nameSpace + ".Infraestructure.DataAccess.Configurations.Base;\n");
+            cuerpo.Append("\n");
 
             cuerpo.Append("namespace " + nameSpace + ".Infraestructure.DataAccess.Configurations");
             cuerpo.Append("\n");
@@ -38,9 +39,9 @@ namespace Generator_Class_BD
             {
                 string columName = TransformHelper.TransformField(row["column_name"].ToString());
 
-                if (StringHelper.CompareString(columName, "Code") || StringHelper.CompareString(columName, "Id"))
+                if (columName.CompareString("Code") || columName.CompareString("Id"))
                 {
-                    string columnId = StringHelper.CompareString(columName, "Code") ? "Code" : "Id";
+                    string columnId = columName.CompareString("Code") ? "Code" : "Id";
                     cuerpo.Append($"\t\t\tbuilder.HasKey(x => x.{columnId});\n\n");
                 }
 

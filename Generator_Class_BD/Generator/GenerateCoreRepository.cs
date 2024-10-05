@@ -19,7 +19,6 @@ namespace Generator_Class_BD
             cuerpo.Append("using " + nameSpace + ".Infraestructure.DataAccess;\n");
             cuerpo.Append("using " + nameSpace + ".Infraestructure.Entities;\n");
             cuerpo.Append("using " + nameSpace + ".Infraestructure.IRepositories;\n");
-            cuerpo.Append("using " + nameSpace + ".Utility;\n");
             cuerpo.Append("\n");
 
             cuerpo.Append("namespace " + nameSpace + ".Infraestructure.Repository");

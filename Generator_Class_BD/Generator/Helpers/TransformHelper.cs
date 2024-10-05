@@ -14,7 +14,7 @@
         {
             string finalField = nameField;
 
-            if (!StringHelper.CompareString(nameField, "Id"))
+            if (!nameField.CompareString("Id"))
             {
                 finalField = nameField.Substring(1);
             }
@@ -24,10 +24,10 @@
 
         public static bool FieldIsNotBase(string nameField)
             => //!StringHelper.CompareString(nameField, "Id") &&
-                !StringHelper.CompareString(nameField, "CreationDate") &&
-                !StringHelper.CompareString(nameField, "CreationUser") &&
-                !StringHelper.CompareString(nameField, "ModificationDate") &&
-                !StringHelper.CompareString(nameField, "ModificationUser") &&
-                !StringHelper.CompareString(nameField, "Deleted");
+                !nameField.CompareString("CreationDate") &&
+                !nameField.CompareString("CreationUser") &&
+                !nameField.CompareString("ModificationDate") &&
+                !nameField.CompareString("ModificationUser") &&
+                !nameField.CompareString("Deleted");
     }
 }

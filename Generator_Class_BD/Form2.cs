@@ -208,22 +208,25 @@ namespace Generator_Class_BD
                             mapperGenerated = true;
                         }
 
+
+                        GetPKey(name);
+                        string columnName = TransformHelper.TransformField(vidPk);
+                        string tipo = "Guid";
+                        if (!columnName.CompareString("Id"))
+                            tipo = "string";
+
+                        string tipoPlantilla = Plantilla.ConvertirTipo(vTypePk, string.Empty);
+                        if (!tipoPlantilla.CompareString("string"))
+                            tipo = tipoPlantilla;
+
                         if (chkDataModule.Checked)
                         {
-                            GetPKey(name);
-                            string columnName = TransformHelper.TransformField(vidPk);
-                            string tipo = "Guid";
-                            if (!StringHelper.CompareString(columnName, "Id"))
-                                tipo = "string";
-
-                            string tipoPlantilla = Plantilla.ConvertirTipo(vTypePk, string.Empty);
-                            if (!StringHelper.CompareString(tipoPlantilla, "string"))
-                                tipo = tipoPlantilla;
-
                             GenerateCoreServices.Start(txtNamespace.Text, name, txtRuta.Text, columnName, tipo);
                             GenerateCoreInterfaceServices.Start(txtNamespace.Text, name, txtRuta.Text, columnName, tipo);
                         }
 
+                        if (chkDataController.Checked)
+                            GenerateCoreController.Start(txtNamespace.Text, name, txtRuta.Text, columnName, tipo);
                     }
                 }
             }
