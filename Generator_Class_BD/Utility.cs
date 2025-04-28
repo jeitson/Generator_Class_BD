@@ -21,7 +21,7 @@ namespace Generator_Class_BD
             StreamWriter writer = File.CreateText(fileName);
             writer.WriteLine(contentFile.ToString());
             writer.Close();
-            Console.WriteLine("iniciado para prueba numero 3, se debe revisar webhook porque no funciona asdjasbdks");
+            Console.WriteLine("iniciado para prueba numero 3, se debe revisar webhook porque no funciona nuevos eventos");
         }
     }
 }
