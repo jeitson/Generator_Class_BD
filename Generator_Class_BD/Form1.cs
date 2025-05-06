@@ -61,7 +61,7 @@ namespace Generator_Class_BD
                 }
                 else
                 {
-                    lblstrConexion.Text = "SERVER=;Initial Catalog=;Persist Security Info=False;User ID=;Password=;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+                    lblstrConexion.Text = "Server=tcp:maguna-house.database.windows.net,1433;Initial Catalog=WhiteDB;Persist Security Info=False;User ID=administrador;Password=MagunaHouse01;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
                 }
                 try
                 {
