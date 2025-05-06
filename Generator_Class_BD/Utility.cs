@@ -21,6 +21,15 @@ namespace Generator_Class_BD
             StreamWriter writer = File.CreateText(fileName);
             writer.WriteLine(contentFile.ToString());
             writer.Close();
+            Console.WriteLine("iniciado 1");
+            Console.WriteLine("iniciado 2");
+            Console.WriteLine("iniciado 3");
+            Console.WriteLine("iniciado 4");
+            Console.WriteLine("iniciado 5");
+
+            Console.WriteLine("iniciado 6");
+            Console.WriteLine("iniciado 7");
+            Console.WriteLine("iniciado 8");
         }
     }
 }
