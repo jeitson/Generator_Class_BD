@@ -28,6 +28,8 @@ namespace Generator_Class_BD
             Console.WriteLine("iniciado 5");
 
             Console.WriteLine("iniciado 6");
+            Console.WriteLine("iniciado 7");
+            Console.WriteLine("iniciado 8");
         }
     }
 }
